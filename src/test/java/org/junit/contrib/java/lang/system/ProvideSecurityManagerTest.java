@@ -2,14 +2,15 @@ package org.junit.contrib.java.lang.system;
 
 import static java.lang.System.getSecurityManager;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.contrib.java.lang.system.Executor.executeTestWithRule;
-import static org.junit.contrib.java.lang.system.Statements.TEST_THAT_DOES_NOTHING;
 
 import java.security.Permission;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runners.model.Statement;
+import org.junit.contrib.java.lang.system.TestChecker.ExpectNoFailure;
+import org.junit.runner.RunWith;
 
+@RunWith(TestChecker.class)
 public class ProvideSecurityManagerTest {
 	private static final SecurityManager MANAGER = new SecurityManager() {
 		@Override
@@ -18,28 +19,29 @@ public class ProvideSecurityManagerTest {
 		}
 	};
 
-	public ProvideSecurityManager rule = new ProvideSecurityManager(MANAGER);
+	@ExpectNoFailure
+	public static class provided_security_manager_is_present_during_test {
+		@Rule
+		public final ProvideSecurityManager rule = new ProvideSecurityManager(MANAGER);
 
-	@Test
-	public void provided_security_manager_is_present_during_test() {
-		CaptureSecurityManager test = new CaptureSecurityManager();
-		executeTestWithRule(test, rule);
-		assertThat(test.securityManagerDuringTest).isSameAs(MANAGER);
+		@Test
+		public void test() {
+			assertThat(getSecurityManager()).isSameAs(MANAGER);
+		}
 	}
 
-	@Test
-	public void after_test_security_manager_is_the_same_as_before() {
-		SecurityManager originalManager = getSecurityManager();
-		executeTestWithRule(TEST_THAT_DOES_NOTHING, rule);
-		assertThat(getSecurityManager()).isSameAs(originalManager);
-	}
+	public static class after_test_security_manager_is_the_same_as_before {
+		private static final SecurityManager ORIGINAL_MANAGER = getSecurityManager();
 
-	private static class CaptureSecurityManager extends Statement {
-		SecurityManager securityManagerDuringTest;
+		@Rule
+		public final ProvideSecurityManager rule = new ProvideSecurityManager(MANAGER);
 
-		@Override
-		public void evaluate() throws Throwable {
-			securityManagerDuringTest = getSecurityManager();
+		@Test
+		public void test() {
+		}
+
+		public static void checkAfterwards() {
+			assertThat(getSecurityManager()).isSameAs(ORIGINAL_MANAGER);
 		}
 	}
 }
