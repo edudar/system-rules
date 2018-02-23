@@ -19,13 +19,15 @@ public class StandardErrorStreamLogTest {
 
 	@ExpectNoFailure
 	public static class log_contains_text_that_has_been_written_to_system_err {
-		@Rule
-		public final StandardErrorStreamLog log = new StandardErrorStreamLog();
+		public static class TestClass {
+			@Rule
+			public final StandardErrorStreamLog log = new StandardErrorStreamLog();
 
-		@Test
-		public void test() {
-			System.err.print("dummy text");
-			assertThat(log.getLog()).isEqualTo("dummy text");
+			@Test
+			public void test() {
+				System.err.print("dummy text");
+				assertThat(log.getLog()).isEqualTo("dummy text");
+			}
 		}
 	}
 
@@ -37,12 +39,14 @@ public class StandardErrorStreamLogTest {
 			originalStream = System.err;
 		}
 
-		@Rule
-		public final StandardErrorStreamLog log = new StandardErrorStreamLog();
+		public static class TestClass {
+			@Rule
+			public final StandardErrorStreamLog log = new StandardErrorStreamLog();
 
-		@Test
-		public void test() {
-			System.err.print("dummy text");
+			@Test
+			public void test() {
+				System.err.print("dummy text");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -61,12 +65,14 @@ public class StandardErrorStreamLogTest {
 			setErr(new PrintStream(captureErrorStream));
 		}
 
-		@Rule
-		public final StandardErrorStreamLog log = new StandardErrorStreamLog();
+		public static class TestClass {
+			@Rule
+			public final StandardErrorStreamLog log = new StandardErrorStreamLog();
 
-		@Test
-		public void test() {
-			System.err.print("dummy text");
+			@Test
+			public void test() {
+				System.err.print("dummy text");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -90,13 +96,15 @@ public class StandardErrorStreamLogTest {
 			setErr(new PrintStream(captureErrorStream));
 		}
 
-		@Rule
-		public final StandardErrorStreamLog log = new StandardErrorStreamLog(
-			LogMode.LOG_ONLY);
+		public static class TestClass {
+			@Rule
+			public final StandardErrorStreamLog log = new StandardErrorStreamLog(
+				LogMode.LOG_ONLY);
 
-		@Test
-		public void test() {
-			System.err.print("dummy text");
+			@Test
+			public void test() {
+				System.err.print("dummy text");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -111,25 +119,29 @@ public class StandardErrorStreamLogTest {
 
 	@ExpectNoFailure
 	public static class log_contains_only_text_that_has_been_written_after_log_was_cleared {
-		@Rule
-		public final StandardErrorStreamLog log = new StandardErrorStreamLog();
+		public static class TestClass {
+			@Rule
+			public final StandardErrorStreamLog log = new StandardErrorStreamLog();
 
-		@Test
-		public void test() {
-			System.err.print("text before clearing");
-			log.clear();
-			System.err.print("text after clearing");
-			assertThat(log.getLog()).isEqualTo("text after clearing");
+			@Test
+			public void test() {
+				System.err.print("text before clearing");
+				log.clear();
+				System.err.print("text after clearing");
+				assertThat(log.getLog()).isEqualTo("text after clearing");
+			}
 		}
 	}
 
 	public static class rule_cannot_be_created_without_log_mode {
-		@Rule
-		public final StandardErrorStreamLog log = new StandardErrorStreamLog(
-			null);
+		public static class TestClass {
+			@Rule
+			public final StandardErrorStreamLog log = new StandardErrorStreamLog(
+				null);
 
-		@Test
-		public void test() {
+			@Test
+			public void test() {
+			}
 		}
 
 		public static void expectFailure(Failure failure) {

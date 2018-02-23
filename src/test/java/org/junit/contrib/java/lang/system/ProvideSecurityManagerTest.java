@@ -21,23 +21,27 @@ public class ProvideSecurityManagerTest {
 
 	@ExpectNoFailure
 	public static class provided_security_manager_is_present_during_test {
-		@Rule
-		public final ProvideSecurityManager rule = new ProvideSecurityManager(MANAGER);
+		public static class TestClass {
+			@Rule
+			public final ProvideSecurityManager rule = new ProvideSecurityManager(MANAGER);
 
-		@Test
-		public void test() {
-			assertThat(getSecurityManager()).isSameAs(MANAGER);
+			@Test
+			public void test() {
+				assertThat(getSecurityManager()).isSameAs(MANAGER);
+			}
 		}
 	}
 
 	public static class after_test_security_manager_is_the_same_as_before {
 		private static final SecurityManager ORIGINAL_MANAGER = getSecurityManager();
 
-		@Rule
-		public final ProvideSecurityManager rule = new ProvideSecurityManager(MANAGER);
+		public static class TestClass {
+			@Rule
+			public final ProvideSecurityManager rule = new ProvideSecurityManager(MANAGER);
 
-		@Test
-		public void test() {
+			@Test
+			public void test() {
+			}
 		}
 
 		public static void checkAfterwards() {

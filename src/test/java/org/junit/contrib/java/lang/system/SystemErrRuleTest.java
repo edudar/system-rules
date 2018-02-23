@@ -25,12 +25,14 @@ public class SystemErrRuleTest {
 			originalStream = System.err;
 		}
 
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule();
 
-		@Test
-		public void test() {
-			System.err.print("dummy text");
+			@Test
+			public void test() {
+				System.err.print("dummy text");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -49,12 +51,14 @@ public class SystemErrRuleTest {
 			setErr(new PrintStream(captureErrorStream));
 		}
 
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule();
 
-		@Test
-		public void test() {
-			System.err.print("dummy text");
+			@Test
+			public void test() {
+				System.err.print("dummy text");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -78,12 +82,14 @@ public class SystemErrRuleTest {
 			setErr(new PrintStream(captureErrorStream));
 		}
 
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule().mute();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule().mute();
 
-		@Test
-		public void test() {
-			System.err.print("dummy text");
+			@Test
+			public void test() {
+				System.err.print("dummy text");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -107,14 +113,16 @@ public class SystemErrRuleTest {
 			setErr(new PrintStream(captureErrorStream));
 		}
 
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule();
 
-		@Test
-		public void test() {
-			System.err.print("text before muting");
-			systemErrRule.mute();
-			System.err.print("text after muting");
+			@Test
+			public void test() {
+				System.err.print("text before muting");
+				systemErrRule.mute();
+				System.err.print("text after muting");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -139,13 +147,15 @@ public class SystemErrRuleTest {
 			setErr(new PrintStream(captureErrorStream));
 		}
 
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule()
-			.muteForSuccessfulTests();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule()
+				.muteForSuccessfulTests();
 
-		@Test
-		public void test() {
-			System.err.print("dummy text");
+			@Test
+			public void test() {
+				System.err.print("dummy text");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -169,14 +179,16 @@ public class SystemErrRuleTest {
 			setErr(new PrintStream(captureErrorStream));
 		}
 
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule()
-			.muteForSuccessfulTests();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule()
+				.muteForSuccessfulTests();
 
-		@Test
-		public void test() {
-			System.err.print("dummy text");
-			fail();
+			@Test
+			public void test() {
+				System.err.print("dummy text");
+				fail();
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -203,13 +215,15 @@ public class SystemErrRuleTest {
 			setErr(new PrintStream(captureErrorStream));
 		}
 
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule();
 
-		@Test
-		public void test() {
-			systemErrRule.muteForSuccessfulTests();
-			System.err.print("dummy text");
+			@Test
+			public void test() {
+				systemErrRule.muteForSuccessfulTests();
+				System.err.print("dummy text");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -233,14 +247,16 @@ public class SystemErrRuleTest {
 			setErr(new PrintStream(captureErrorStream));
 		}
 
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule();
 
-		@Test
-		public void test() {
-			systemErrRule.muteForSuccessfulTests();
-			System.err.print("dummy text");
-			fail();
+			@Test
+			public void test() {
+				systemErrRule.muteForSuccessfulTests();
+				System.err.print("dummy text");
+				fail();
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -258,70 +274,80 @@ public class SystemErrRuleTest {
 
 	@ExpectNoFailure
 	public static class no_text_is_logged_by_default {
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule();
 
-		@Test
-		public void test() {
-			System.err.print("dummy text");
-			assertThat(systemErrRule.getLog()).isEmpty();
+			@Test
+			public void test() {
+				System.err.print("dummy text");
+				assertThat(systemErrRule.getLog()).isEmpty();
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class text_is_logged_if_log_has_been_enabled_globally {
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule()
-			.enableLog();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule()
+				.enableLog();
 
-		@Test
-		public void test() {
-			System.err.print("dummy text");
-			assertThat(systemErrRule.getLog()).isEqualTo("dummy text");
+			@Test
+			public void test() {
+				System.err.print("dummy text");
+				assertThat(systemErrRule.getLog()).isEqualTo("dummy text");
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class text_is_logged_after_log_has_been_enabled_locally {
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule();
 
-		@Test
-		public void test() {
-			System.err.print("text before enabling log");
-			systemErrRule.enableLog();
-			System.err.print("text after enabling log");
-			assertThat(systemErrRule.getLog())
-				.isEqualTo("text after enabling log");
+			@Test
+			public void test() {
+				System.err.print("text before enabling log");
+				systemErrRule.enableLog();
+				System.err.print("text after enabling log");
+				assertThat(systemErrRule.getLog())
+					.isEqualTo("text after enabling log");
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class log_contains_only_text_that_has_been_written_after_log_was_cleared {
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule()
-			.enableLog();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule()
+				.enableLog();
 
-		@Test
-		public void test() {
-			System.err.print("text before clearing");
-			systemErrRule.clearLog();
-			System.err.print("text after clearing");
-			assertThat(systemErrRule.getLog()).isEqualTo("text after clearing");
+			@Test
+			public void test() {
+				System.err.print("text before clearing");
+				systemErrRule.clearLog();
+				System.err.print("text after clearing");
+				assertThat(systemErrRule.getLog()).isEqualTo("text after clearing");
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class text_is_logged_if_rule_is_enabled_and_muted {
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule()
-			.enableLog()
-			.mute();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule()
+				.enableLog()
+				.mute();
 
-		@Test
-		public void test() {
-			System.err.print("dummy text");
-			assertThat(systemErrRule.getLog()).isEqualTo("dummy text");
+			@Test
+			public void test() {
+				System.err.print("dummy text");
+				assertThat(systemErrRule.getLog()).isEqualTo("dummy text");
+			}
 		}
 	}
 
@@ -336,15 +362,17 @@ public class SystemErrRuleTest {
 			setProperty("line.separator", "\r\n");
 		}
 
-		@Rule
-		public final SystemErrRule systemErrRule = new SystemErrRule()
-			 .enableLog();
+		public static class TestClass {
+			@Rule
+			public final SystemErrRule systemErrRule = new SystemErrRule()
+				.enableLog();
 
-		@Test
-		public void test() {
-			System.err.print(format("dummy%ntext%n"));
-			assertThat(systemErrRule.getLogWithNormalizedLineSeparator())
-				.isEqualTo("dummy\ntext\n");
+			@Test
+			public void test() {
+				System.err.print(format("dummy%ntext%n"));
+				assertThat(systemErrRule.getLogWithNormalizedLineSeparator())
+					.isEqualTo("dummy\ntext\n");
+			}
 		}
 	}
 }

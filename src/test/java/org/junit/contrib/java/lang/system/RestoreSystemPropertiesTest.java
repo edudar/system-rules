@@ -20,12 +20,14 @@ public class RestoreSystemPropertiesTest {
 			System.setProperty(PROPERTY_KEY, "dummy value");
 		}
 
-		@Rule
-		public final TestRule restoreSystemProperties = new RestoreSystemProperties();
+		public static class TestClass {
+			@Rule
+			public final TestRule restoreSystemProperties = new RestoreSystemProperties();
 
-		@Test
-		public void test() {
-			System.setProperty(PROPERTY_KEY, "another value");
+			@Test
+			public void test() {
+				System.setProperty(PROPERTY_KEY, "another value");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -40,12 +42,14 @@ public class RestoreSystemPropertiesTest {
 			System.clearProperty(PROPERTY_KEY);
 		}
 
-		@Rule
-		public final TestRule restoreSystemProperties = new RestoreSystemProperties();
+		public static class TestClass {
+			@Rule
+			public final TestRule restoreSystemProperties = new RestoreSystemProperties();
 
-		@Test
-		public void test() {
-			System.setProperty(PROPERTY_KEY, "another value");
+			@Test
+			public void test() {
+				System.setProperty(PROPERTY_KEY, "another value");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -65,13 +69,15 @@ public class RestoreSystemPropertiesTest {
 			originalProperties = System.getProperties();
 		}
 
-		@Rule
-		public final TestRule restoreSystemProperties = new RestoreSystemProperties();
+		public static class TestClass {
+			@Rule
+			public final TestRule restoreSystemProperties = new RestoreSystemProperties();
 
-		@Test
-		public void test() {
-			assertThat(System.getProperties())
-				.isEqualTo(originalProperties);
+			@Test
+			public void test() {
+				assertThat(System.getProperties())
+					.isEqualTo(originalProperties);
+			}
 		}
 	}
 }

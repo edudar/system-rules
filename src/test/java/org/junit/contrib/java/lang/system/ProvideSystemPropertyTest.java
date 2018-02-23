@@ -32,15 +32,17 @@ public class ProvideSystemPropertyTest {
 		public static final RestoreSystemProperties restoreSystemProperty
 			= new RestoreSystemProperties();
 
-		@Rule
-		public final ProvideSystemProperty provideSystemProperty =
-			new ProvideSystemProperty(ARBITRARY_KEY, ARBITRARY_VALUE)
-				.and(ANOTHER_KEY, A_DIFFERENT_VALUE);
+		public static class TestClass {
+			@Rule
+			public final ProvideSystemProperty provideSystemProperty =
+				new ProvideSystemProperty(ARBITRARY_KEY, ARBITRARY_VALUE)
+					.and(ANOTHER_KEY, A_DIFFERENT_VALUE);
 
-		@Test
-		public void test() {
-			assertThat(getProperty(ARBITRARY_KEY)).isEqualTo(ARBITRARY_VALUE);
-			assertThat(getProperty(ANOTHER_KEY)).isEqualTo(A_DIFFERENT_VALUE);
+			@Test
+			public void test() {
+				assertThat(getProperty(ARBITRARY_KEY)).isEqualTo(ARBITRARY_VALUE);
+				assertThat(getProperty(ANOTHER_KEY)).isEqualTo(A_DIFFERENT_VALUE);
+			}
 		}
 	}
 
@@ -55,13 +57,15 @@ public class ProvideSystemPropertyTest {
 			setProperty(ARBITRARY_KEY, "value before executing the rule");
 		}
 
-		@Rule
-		public final ProvideSystemProperty provideSystemProperty =
-			new ProvideSystemProperty(ARBITRARY_KEY, null);
+		public static class TestClass {
+			@Rule
+			public final ProvideSystemProperty provideSystemProperty =
+				new ProvideSystemProperty(ARBITRARY_KEY, null);
 
-		@Test
-		public void test() {
-			assertThat(getProperty(ARBITRARY_KEY)).isNull();
+			@Test
+			public void test() {
+				assertThat(getProperty(ARBITRARY_KEY)).isNull();
+			}
 		}
 	}
 
@@ -76,13 +80,15 @@ public class ProvideSystemPropertyTest {
 			setProperty(ANOTHER_KEY, "value of second property");
 		}
 
-		@Rule
-		public final ProvideSystemProperty provideSystemProperty =
-			new ProvideSystemProperty(ARBITRARY_KEY, "different value")
-				.and(ANOTHER_KEY, "another different value");
+		public static class TestClass {
+			@Rule
+			public final ProvideSystemProperty provideSystemProperty =
+				new ProvideSystemProperty(ARBITRARY_KEY, "different value")
+					.and(ANOTHER_KEY, "another different value");
 
-		@Test
-		public void test() {
+			@Test
+			public void test() {
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -103,12 +109,14 @@ public class ProvideSystemPropertyTest {
 			clearProperty(ARBITRARY_KEY);
 		}
 
-		@Rule
-		public final ProvideSystemProperty provideSystemProperty =
-			new ProvideSystemProperty(ARBITRARY_KEY, "other value");
+		public static class TestClass {
+			@Rule
+			public final ProvideSystemProperty provideSystemProperty =
+				new ProvideSystemProperty(ARBITRARY_KEY, "other value");
 
-		@Test
-		public void test() {
+			@Test
+			public void test() {
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -122,12 +130,14 @@ public class ProvideSystemPropertyTest {
 		public static final RestoreSystemProperties restoreSystemProperty
 			= new RestoreSystemProperties();
 
-		@Rule
-		public final ProvideSystemProperty provideSystemProperty = fromResource(EXAMPLE_PROPERTIES);
+		public static class TestClass {
+			@Rule
+			public final ProvideSystemProperty provideSystemProperty = fromResource(EXAMPLE_PROPERTIES);
 
-		@Test
-		public void test() {
-			assertThat(getProperty(ARBITRARY_KEY)).isEqualTo(ARBITRARY_VALUE);
+			@Test
+			public void test() {
+				assertThat(getProperty(ARBITRARY_KEY)).isEqualTo(ARBITRARY_VALUE);
+			}
 		}
 	}
 
@@ -154,12 +164,14 @@ public class ProvideSystemPropertyTest {
 
 		private static File file;
 
-		@Rule
-		public final ProvideSystemProperty provideSystemProperty = fromFile(file.getAbsolutePath());
+		public static class TestClass {
+			@Rule
+			public final ProvideSystemProperty provideSystemProperty = fromFile(file.getAbsolutePath());
 
-		@Test
-		public void test() {
-			assertThat(getProperty(ARBITRARY_KEY)).isEqualTo(ARBITRARY_VALUE);
+			@Test
+			public void test() {
+				assertThat(getProperty(ARBITRARY_KEY)).isEqualTo(ARBITRARY_VALUE);
+			}
 		}
 	}
 
@@ -174,13 +186,15 @@ public class ProvideSystemPropertyTest {
 			setProperty(ARBITRARY_KEY, "value before executing the rule");
 		}
 
-		@Rule
-		public final ProvideSystemProperty provideSystemProperty = new ProvideSystemProperty();
+		public static class TestClass {
+			@Rule
+			public final ProvideSystemProperty provideSystemProperty = new ProvideSystemProperty();
 
-		@Test
-		public void test() {
-			setProperty(ARBITRARY_KEY, "dummy value");
-			assertThat(getProperty(ARBITRARY_KEY)).isEqualTo("dummy value");
+			@Test
+			public void test() {
+				setProperty(ARBITRARY_KEY, "dummy value");
+				assertThat(getProperty(ARBITRARY_KEY)).isEqualTo("dummy value");
+			}
 		}
 	}
 
@@ -194,12 +208,14 @@ public class ProvideSystemPropertyTest {
 			setProperty(ARBITRARY_KEY, "value before executing the rule");
 		}
 
-		@Rule
-		public final ProvideSystemProperty provideSystemProperty = new ProvideSystemProperty();
+		public static class TestClass {
+			@Rule
+			public final ProvideSystemProperty provideSystemProperty = new ProvideSystemProperty();
 
-		@Test
-		public void test() {
-			provideSystemProperty.setProperty(ARBITRARY_KEY, "dummy value");
+			@Test
+			public void test() {
+				provideSystemProperty.setProperty(ARBITRARY_KEY, "dummy value");
+			}
 		}
 
 		public static void checkAfterwards() {

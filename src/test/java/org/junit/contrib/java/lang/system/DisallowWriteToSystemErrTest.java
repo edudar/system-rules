@@ -20,21 +20,25 @@ public class DisallowWriteToSystemErrTest {
 
 	@ExpectNoFailure
 	public static class test_is_successful_if_it_does_not_write_to_System_err {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
+			@Test
+			public void test() {
+			}
 		}
 	}
 
 	public static class test_fails_if_it_tries_to_append_a_text_to_System_err {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.append("dummy text");
+			@Test
+			public void test() {
+				System.err.append("dummy text");
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -44,12 +48,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_tries_to_append_a_character_to_System_err {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.append('x');
+			@Test
+			public void test() {
+				System.err.append('x');
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -59,12 +65,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_tries_to_append_a_sub_sequence_of_a_text_to_System_err {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.append("dummy text", 2, 3);
+			@Test
+			public void test() {
+				System.err.append("dummy text", 2, 3);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -74,12 +82,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_format_with_a_Locale {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.format(DUMMY_LOCALE, "%s, %s", "first dummy", "second dummy");
+			@Test
+			public void test() {
+				System.err.format(DUMMY_LOCALE, "%s, %s", "first dummy", "second dummy");
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -89,12 +99,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_format_without_a_Locale {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.format("%s, %s", "first dummy", "second dummy");
+			@Test
+			public void test() {
+				System.err.format("%s, %s", "first dummy", "second dummy");
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -104,12 +116,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_print_with_a_boolean {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.print(true);
+			@Test
+			public void test() {
+				System.err.print(true);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -119,12 +133,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_print_with_a_char {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.print('a');
+			@Test
+			public void test() {
+				System.err.print('a');
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -134,12 +150,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_print_with_an_array_of_chars {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.print(new char[]{'d', 'u', 'm', 'm', 'y'});
+			@Test
+			public void test() {
+				System.err.print(new char[]{'d', 'u', 'm', 'm', 'y'});
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -149,12 +167,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_print_with_a_double {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.print(1d);
+			@Test
+			public void test() {
+				System.err.print(1d);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -164,12 +184,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_print_with_a_float {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.print(1f);
+			@Test
+			public void test() {
+				System.err.print(1f);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -179,12 +201,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_print_with_an_int {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.print(1);
+			@Test
+			public void test() {
+				System.err.print(1);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -194,12 +218,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_print_with_a_long {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.print(1L);
+			@Test
+			public void test() {
+				System.err.print(1L);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -209,12 +235,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_print_with_an_object {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.print(new Object());
+			@Test
+			public void test() {
+				System.err.print(new Object());
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -224,12 +252,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_print_with_a_string {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.print("dummy");
+			@Test
+			public void test() {
+				System.err.print("dummy");
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -239,12 +269,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_printf_with_a_localized_formatted_text {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.printf(DUMMY_LOCALE, "%s, %s", "first dummy", "second dummy");
+			@Test
+			public void test() {
+				System.err.printf(DUMMY_LOCALE, "%s, %s", "first dummy", "second dummy");
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -254,12 +286,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_printf_with_a_formatted_text {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.printf("%s, %s", "first dummy", "second dummy");
+			@Test
+			public void test() {
+				System.err.printf("%s, %s", "first dummy", "second dummy");
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -269,12 +303,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_println_on_System_err {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.println();
+			@Test
+			public void test() {
+				System.err.println();
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -286,12 +322,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_println_with_a_boolean {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.println(true);
+			@Test
+			public void test() {
+				System.err.println(true);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -301,12 +339,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_println_with_a_char {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.println('a');
+			@Test
+			public void test() {
+				System.err.println('a');
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -316,12 +356,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_println_with_an_array_of_chars {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.println(new char[]{'d', 'u', 'm', 'm', 'y'});
+			@Test
+			public void test() {
+				System.err.println(new char[]{'d', 'u', 'm', 'm', 'y'});
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -331,12 +373,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_println_with_a_double {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.println(1d);
+			@Test
+			public void test() {
+				System.err.println(1d);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -346,12 +390,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_println_with_a_float {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.println(1f);
+			@Test
+			public void test() {
+				System.err.println(1f);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -361,12 +407,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_println_with_an_int {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.println(1);
+			@Test
+			public void test() {
+				System.err.println(1);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -376,12 +424,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_println_with_a_long {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.println(1L);
+			@Test
+			public void test() {
+				System.err.println(1L);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -391,12 +441,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_println_with_an_object {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.println(new Object());
+			@Test
+			public void test() {
+				System.err.println(new Object());
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -406,12 +458,14 @@ public class DisallowWriteToSystemErrTest {
 	}
 
 	public static class test_fails_if_it_calls_System_err_println_with_a_string {
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
-			System.err.println("dummy");
+			@Test
+			public void test() {
+				System.err.println("dummy");
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -428,11 +482,13 @@ public class DisallowWriteToSystemErrTest {
 			originalErr = err;
 		}
 
-		@Rule
-		public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
+		public static class TestClass {
+			@Rule
+			public final DisallowWriteToSystemErr disallowWrite = new DisallowWriteToSystemErr();
 
-		@Test
-		public void test() {
+			@Test
+			public void test() {
+			}
 		}
 
 		public static void checkAfterwards() {

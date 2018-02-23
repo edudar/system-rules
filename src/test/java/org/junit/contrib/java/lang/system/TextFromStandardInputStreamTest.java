@@ -40,152 +40,172 @@ public class TextFromStandardInputStreamTest {
 
 	@ExpectNoFailure
 	public static class provided_text_is_available_from_system_in {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() {
-			systemInMock.provideText("arbitrary text");
-			Scanner scanner = new Scanner(in);
-			String textFromSystemIn = scanner.nextLine();
-			assertThat(textFromSystemIn).isEqualTo("arbitrary text");
+			@Test
+			public void test() {
+				systemInMock.provideText("arbitrary text");
+				Scanner scanner = new Scanner(in);
+				String textFromSystemIn = scanner.nextLine();
+				assertThat(textFromSystemIn).isEqualTo("arbitrary text");
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class specified_texts_are_available_from_system_in {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() {
-			String lineSeparator = getProperty("line.separator");
-			systemInMock.provideText("first text" + lineSeparator,
-				"second text" + lineSeparator);
-			Scanner firstScanner = new Scanner(in);
-			firstScanner.nextLine();
-			Scanner secondScanner = new Scanner(in);
-			String textFromSystemIn = secondScanner.nextLine();
-			assertThat(textFromSystemIn).isEqualTo("second text");
+			@Test
+			public void test() {
+				String lineSeparator = getProperty("line.separator");
+				systemInMock.provideText("first text" + lineSeparator,
+					"second text" + lineSeparator);
+				Scanner firstScanner = new Scanner(in);
+				firstScanner.nextLine();
+				Scanner secondScanner = new Scanner(in);
+				String textFromSystemIn = secondScanner.nextLine();
+				assertThat(textFromSystemIn).isEqualTo("second text");
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class no_text_is_available_from_system_in_if_no_text_has_been_provided {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() throws Exception {
-			systemInMock.provideText();
-			int character = in.read();
-			assertThat(character).isEqualTo(-1);
+			@Test
+			public void test() throws Exception {
+				systemInMock.provideText();
+				int character = in.read();
+				assertThat(character).isEqualTo(-1);
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class specified_lines_are_available_from_system_in {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() {
-			systemInMock.provideLines("first text", "second text");
-			Scanner firstScanner = new Scanner(in);
-			firstScanner.nextLine();
-			Scanner secondScanner = new Scanner(in);
-			String textFromSystemIn = secondScanner.nextLine();
-			assertThat(textFromSystemIn).isEqualTo("second text");
+			@Test
+			public void test() {
+				systemInMock.provideLines("first text", "second text");
+				Scanner firstScanner = new Scanner(in);
+				firstScanner.nextLine();
+				Scanner secondScanner = new Scanner(in);
+				String textFromSystemIn = secondScanner.nextLine();
+				assertThat(textFromSystemIn).isEqualTo("second text");
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class no_text_is_available_from_system_in_if_no_line_has_been_provided {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() throws Exception {
-			systemInMock.provideLines();
-			int character = in.read();
-			assertThat(character).isEqualTo(-1);
+			@Test
+			public void test() throws Exception {
+				systemInMock.provideLines();
+				int character = in.read();
+				assertThat(character).isEqualTo(-1);
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class system_in_provides_specified_text_and_throws_requested_IOException_afterwards {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() throws Exception {
-			systemInMock.provideText("arbitrary text");
-			systemInMock.throwExceptionOnInputEnd(DUMMY_IO_EXCEPTION);
-			assertSystemInProvidesText("arbitrary text");
-			Throwable exception = exceptionThrownBy(READ_NEXT_BYTE);
-			assertThat(exception).isSameAs(DUMMY_IO_EXCEPTION);
+			@Test
+			public void test() throws Exception {
+				systemInMock.provideText("arbitrary text");
+				systemInMock.throwExceptionOnInputEnd(DUMMY_IO_EXCEPTION);
+				assertSystemInProvidesText("arbitrary text");
+				Throwable exception = exceptionThrownBy(READ_NEXT_BYTE);
+				assertThat(exception).isSameAs(DUMMY_IO_EXCEPTION);
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class system_in_throws_requested_IOException_on_first_read_if_no_text_has_been_specified {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() {
-			systemInMock.throwExceptionOnInputEnd(DUMMY_IO_EXCEPTION);
-			Throwable exception = exceptionThrownBy(READ_NEXT_BYTE);
-			assertThat(exception).isSameAs(DUMMY_IO_EXCEPTION);
+			@Test
+			public void test() {
+				systemInMock.throwExceptionOnInputEnd(DUMMY_IO_EXCEPTION);
+				Throwable exception = exceptionThrownBy(READ_NEXT_BYTE);
+				assertThat(exception).isSameAs(DUMMY_IO_EXCEPTION);
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class system_in_provides_specified_text_and_throws_requested_RuntimeException_afterwards {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() throws Exception {
-			systemInMock.provideText("arbitrary text");
-			systemInMock.throwExceptionOnInputEnd(DUMMY_RUNTIME_EXCEPTION);
-			assertSystemInProvidesText("arbitrary text");
-			Throwable exception = exceptionThrownBy(READ_NEXT_BYTE);
-			assertThat(exception).isSameAs(DUMMY_RUNTIME_EXCEPTION);
+			@Test
+			public void test() throws Exception {
+				systemInMock.provideText("arbitrary text");
+				systemInMock.throwExceptionOnInputEnd(DUMMY_RUNTIME_EXCEPTION);
+				assertSystemInProvidesText("arbitrary text");
+				Throwable exception = exceptionThrownBy(READ_NEXT_BYTE);
+				assertThat(exception).isSameAs(DUMMY_RUNTIME_EXCEPTION);
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class system_in_throws_requested_RuntimeException_on_first_read_if_no_text_has_been_specified {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() {
-			systemInMock.throwExceptionOnInputEnd(DUMMY_RUNTIME_EXCEPTION);
-			Throwable exception = exceptionThrownBy(READ_NEXT_BYTE);
-			assertThat(exception).isSameAs(DUMMY_RUNTIME_EXCEPTION);
+			@Test
+			public void test() {
+				systemInMock.throwExceptionOnInputEnd(DUMMY_RUNTIME_EXCEPTION);
+				Throwable exception = exceptionThrownBy(READ_NEXT_BYTE);
+				assertThat(exception).isSameAs(DUMMY_RUNTIME_EXCEPTION);
+			}
 		}
 	}
 
 	public static class an_IOException_cannot_be_requested_if_a_RuntimeException_has_already_been_requested {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() {
-			systemInMock.throwExceptionOnInputEnd(DUMMY_RUNTIME_EXCEPTION);
-			systemInMock.throwExceptionOnInputEnd(DUMMY_IO_EXCEPTION);
+			@Test
+			public void test() {
+				systemInMock.throwExceptionOnInputEnd(DUMMY_RUNTIME_EXCEPTION);
+				systemInMock.throwExceptionOnInputEnd(DUMMY_IO_EXCEPTION);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -197,14 +217,16 @@ public class TextFromStandardInputStreamTest {
 	}
 
 	public static class a_RuntimeException_cannot_be_requested_if_an_IOException_has_already_been_requested {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() {
-			systemInMock.throwExceptionOnInputEnd(DUMMY_IO_EXCEPTION);
-			systemInMock.throwExceptionOnInputEnd(DUMMY_RUNTIME_EXCEPTION);
+			@Test
+			public void test() {
+				systemInMock.throwExceptionOnInputEnd(DUMMY_IO_EXCEPTION);
+				systemInMock.throwExceptionOnInputEnd(DUMMY_RUNTIME_EXCEPTION);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -225,12 +247,14 @@ public class TextFromStandardInputStreamTest {
 			originalSystemIn = System.in;
 		}
 
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() {
+			@Test
+			public void test() {
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -240,13 +264,15 @@ public class TextFromStandardInputStreamTest {
 
 	//this is default behaviour of an InputStream according to its JavaDoc
 	public static class system_in_throws_NullPointerException_when_read_is_called_with_null_array {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() throws Exception {
-			System.in.read(null);
+			@Test
+			public void test() throws Exception {
+				System.in.read(null);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -257,13 +283,15 @@ public class TextFromStandardInputStreamTest {
 
 	//this is default behaviour of an InputStream according to its JavaDoc
 	public static class system_in_throws_IndexOutOfBoundsException_when_read_is_called_with_negative_offset {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() throws Exception {
-			System.in.read(DUMMY_ARRAY, -1, VALID_READ_LENGTH);
+			@Test
+			public void test() throws Exception {
+				System.in.read(DUMMY_ARRAY, -1, VALID_READ_LENGTH);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -274,13 +302,15 @@ public class TextFromStandardInputStreamTest {
 
 	//this is default behaviour of an InputStream according to its JavaDoc
 	public static class system_in_throws_IndexOutOfBoundsException_when_read_is_called_with_negative_length {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() throws Exception {
-			System.in.read(DUMMY_ARRAY, VALID_OFFSET, -1);
+			@Test
+			public void test() throws Exception {
+				System.in.read(DUMMY_ARRAY, VALID_OFFSET, -1);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -291,14 +321,16 @@ public class TextFromStandardInputStreamTest {
 
 	//this is default behaviour of an InputStream according to its JavaDoc
 	public static class system_in_throws_IndexOutOfBoundsException_when_read_is_called_with_oversized_length {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() throws Exception {
-			int oversizedLength = DUMMY_ARRAY.length - VALID_OFFSET + 1;
-			System.in.read(DUMMY_ARRAY, VALID_OFFSET, oversizedLength);
+			@Test
+			public void test() throws Exception {
+				int oversizedLength = DUMMY_ARRAY.length - VALID_OFFSET + 1;
+				System.in.read(DUMMY_ARRAY, VALID_OFFSET, oversizedLength);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -309,41 +341,47 @@ public class TextFromStandardInputStreamTest {
 
 	@ExpectNoFailure
 	public static class system_in_reads_zero_bytes_even_if_mock_should_throw_IOException_on_input_end {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() throws Exception {
-			systemInMock.throwExceptionOnInputEnd(DUMMY_IO_EXCEPTION);
-			int numBytesRead = System.in.read(DUMMY_ARRAY, VALID_OFFSET, 0);
-			assertThat(numBytesRead).isZero();
+			@Test
+			public void test() throws Exception {
+				systemInMock.throwExceptionOnInputEnd(DUMMY_IO_EXCEPTION);
+				int numBytesRead = System.in.read(DUMMY_ARRAY, VALID_OFFSET, 0);
+				assertThat(numBytesRead).isZero();
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class system_in_reads_zero_bytes_even_if_mock_should_throw_RuntimeException_on_input_end {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() throws Exception {
-			systemInMock.throwExceptionOnInputEnd(DUMMY_RUNTIME_EXCEPTION);
-			int numBytesRead = System.in.read(DUMMY_ARRAY, VALID_OFFSET, 0);
-			assertThat(numBytesRead).isZero();
+			@Test
+			public void test() throws Exception {
+				systemInMock.throwExceptionOnInputEnd(DUMMY_RUNTIME_EXCEPTION);
+				int numBytesRead = System.in.read(DUMMY_ARRAY, VALID_OFFSET, 0);
+				assertThat(numBytesRead).isZero();
+			}
 		}
 	}
 
 	public static class system_in_read_bytes_throws_specified_IOException_on_input_end {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() throws Exception {
-			systemInMock.throwExceptionOnInputEnd(DUMMY_IO_EXCEPTION);
-			System.in.read(DUMMY_ARRAY, VALID_OFFSET, VALID_READ_LENGTH);
+			@Test
+			public void test() throws Exception {
+				systemInMock.throwExceptionOnInputEnd(DUMMY_IO_EXCEPTION);
+				System.in.read(DUMMY_ARRAY, VALID_OFFSET, VALID_READ_LENGTH);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -354,14 +392,16 @@ public class TextFromStandardInputStreamTest {
 
 	@ExpectNoFailure
 	public static class system_in_read_bytes_throws_specified_RuntimeException_on_input_end {
-		@Rule
-		public final TextFromStandardInputStream systemInMock
-			= emptyStandardInputStream();
+		public static class TestClass {
+			@Rule
+			public final TextFromStandardInputStream systemInMock
+				= emptyStandardInputStream();
 
-		@Test
-		public void test() throws Exception {
-			systemInMock.throwExceptionOnInputEnd(DUMMY_RUNTIME_EXCEPTION);
-			System.in.read(DUMMY_ARRAY, VALID_OFFSET, VALID_READ_LENGTH);
+			@Test
+			public void test() throws Exception {
+				systemInMock.throwExceptionOnInputEnd(DUMMY_RUNTIME_EXCEPTION);
+				System.in.read(DUMMY_ARRAY, VALID_OFFSET, VALID_READ_LENGTH);
+			}
 		}
 
 		public static void expectFailure(Failure failure) {

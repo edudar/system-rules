@@ -21,14 +21,16 @@ public class ClearSystemPropertiesTest {
 			setProperty("second property", "another dummy value");
 		}
 
-		@Rule
-		public final ClearSystemProperties clearSystemProperties
-			= new ClearSystemProperties("first property", "second property");
+		public static class TestClass {
+			@Rule
+			public final ClearSystemProperties clearSystemProperties
+				= new ClearSystemProperties("first property", "second property");
 
-		@Test
-		public void test() {
-			assertThat(getProperty("first property")).isNull();
-			assertThat(getProperty("second property")).isNull();
+			@Test
+			public void test() {
+				assertThat(getProperty("first property")).isNull();
+				assertThat(getProperty("second property")).isNull();
+			}
 		}
 	}
 
@@ -43,14 +45,16 @@ public class ClearSystemPropertiesTest {
 			setProperty("property", "dummy value");
 		}
 
-		@Rule
-		public final ClearSystemProperties clearSystemProperties
-			= new ClearSystemProperties();
+		public static class TestClass {
+			@Rule
+			public final ClearSystemProperties clearSystemProperties
+				= new ClearSystemProperties();
 
-		@Test
-		public void test() {
-			clearSystemProperties.clearProperty("property");
-			assertThat(getProperty("property")).isNull();
+			@Test
+			public void test() {
+				clearSystemProperties.clearProperty("property");
+				assertThat(getProperty("property")).isNull();
+			}
 		}
 	}
 
@@ -66,13 +70,15 @@ public class ClearSystemPropertiesTest {
 			setProperty("third property", "another dummy value");
 		}
 
-		@Rule
-		public final ClearSystemProperties clearSystemProperties
-			= new ClearSystemProperties("first property", "second property");
+		public static class TestClass {
+			@Rule
+			public final ClearSystemProperties clearSystemProperties
+				= new ClearSystemProperties("first property", "second property");
 
-		@Test
-		public void test() {
-			clearSystemProperties.clearProperty("third property");
+			@Test
+			public void test() {
+				clearSystemProperties.clearProperty("third property");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -94,12 +100,14 @@ public class ClearSystemPropertiesTest {
 			clearProperty("property");
 		}
 
-		@Rule
-		public final ClearSystemProperties clearSystemProperties
-			= new ClearSystemProperties("property");
+		public static class TestClass {
+			@Rule
+			public final ClearSystemProperties clearSystemProperties
+				= new ClearSystemProperties("property");
 
-		@Test
-		public void test() {
+			@Test
+			public void test() {
+			}
 		}
 
 		//everything is fine if test is successful

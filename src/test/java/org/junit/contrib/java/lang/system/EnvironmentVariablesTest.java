@@ -24,12 +24,14 @@ public class EnvironmentVariablesTest {
 			originalEnvironmentVariables = new HashMap<String, String>(getenv());
 		}
 
-		@Rule
-		public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		public static class TestClass {
+			@Rule
+			public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
-		@Test
-		public void test() {
-			environmentVariables.set("dummy name", "dummy value");
+			@Test
+			public void test() {
+				environmentVariables.set("dummy name", "dummy value");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -45,12 +47,14 @@ public class EnvironmentVariablesTest {
 			originalValue = getenv("dummy name");
 		}
 
-		@Rule
-		public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		public static class TestClass {
+			@Rule
+			public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
-		@Test
-		public void test() {
-			environmentVariables.set("dummy name", "dummy value");
+			@Test
+			public void test() {
+				environmentVariables.set("dummy name", "dummy value");
+			}
 		}
 
 		public static void checkAfterwards() {
@@ -66,13 +70,15 @@ public class EnvironmentVariablesTest {
 			originalEnvironmentVariables = new HashMap<String, String>(getenv());
 		}
 
-		@Rule
-		public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		public static class TestClass {
+			@Rule
+			public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
-		@Test
-		public void test() {
-			environmentVariables.set("dummy name", "dummy value");
-			throw new RuntimeException("dummy exception");
+			@Test
+			public void test() {
+				environmentVariables.set("dummy name", "dummy value");
+				throw new RuntimeException("dummy exception");
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -88,13 +94,15 @@ public class EnvironmentVariablesTest {
 			originalValue = getenv("dummy name");
 		}
 
-		@Rule
-		public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		public static class TestClass {
+			@Rule
+			public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
-		@Test
-		public void test() {
-			environmentVariables.set("dummy name", "dummy value");
-			throw new RuntimeException("dummy exception");
+			@Test
+			public void test() {
+				environmentVariables.set("dummy name", "dummy value");
+				throw new RuntimeException("dummy exception");
+			}
 		}
 
 		public static void expectFailure(Failure failure) {
@@ -104,86 +112,98 @@ public class EnvironmentVariablesTest {
 
 	@ExpectNoFailure
 	public static class environment_variable_that_is_set_in_the_test_is_available_in_the_test {
-		@Rule
-		public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		public static class TestClass {
+			@Rule
+			public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
-		@Test
-		public void test() {
-			environmentVariables.set("dummy name", "dummy value");
-			assertThat(getenv("dummy name")).isEqualTo("dummy value");
+			@Test
+			public void test() {
+				environmentVariables.set("dummy name", "dummy value");
+				assertThat(getenv("dummy name")).isEqualTo("dummy value");
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class environment_variable_that_is_set_in_the_test_is_available_from_environment_variables_map {
-		@Rule
-		public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		public static class TestClass {
+			@Rule
+			public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
-		@Test
-		public void test() {
-			environmentVariables.set("dummy name", "dummy value");
-			assertThat(getenv()).containsEntry("dummy name", "dummy value");
+			@Test
+			public void test() {
+				environmentVariables.set("dummy name", "dummy value");
+				assertThat(getenv()).containsEntry("dummy name", "dummy value");
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class environment_variable_that_is_set_to_null_in_the_test_is_null_in_the_test {
-		@Rule
-		public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		public static class TestClass {
+			@Rule
+			public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
-		@Test
-		public void test() {
-			//we need to set a value because it is null by default
-			environmentVariables.set("dummy name", "dummy value");
-			environmentVariables.set("dummy name", null);
-			assertThat(getenv("dummy name")).isNull();
+			@Test
+			public void test() {
+				//we need to set a value because it is null by default
+				environmentVariables.set("dummy name", "dummy value");
+				environmentVariables.set("dummy name", null);
+				assertThat(getenv("dummy name")).isNull();
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class environment_variable_that_is_set_to_null_in_the_test_is_not_stored_in_the_environment_variables_map {
-		@Rule
-		public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		public static class TestClass {
+			@Rule
+			public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
-		@Test
-		public void test() {
-			//we need to set a value because it is null by default
-			environmentVariables.set("dummy name", "dummy value");
-			environmentVariables.set("dummy name", null);
-			assertThat(getenv()).doesNotContainKey("dummy name");
+			@Test
+			public void test() {
+				//we need to set a value because it is null by default
+				environmentVariables.set("dummy name", "dummy value");
+				environmentVariables.set("dummy name", null);
+				assertThat(getenv()).doesNotContainKey("dummy name");
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class environment_variables_that_are_cleared_in_the_test_are_null_in_the_test {
-		@Rule
-		public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		public static class TestClass {
+			@Rule
+			public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
-		@Test
-		public void test() {
-			//we need to set a value because it is null by default
-			environmentVariables.set("dummy name", "dummy value");
-			environmentVariables.set("another name", "dummy value");
-			environmentVariables.clear("dummy name", "another name");
-			assertThat(getenv("dummy name")).isNull();
-			assertThat(getenv("another name")).isNull();
+			@Test
+			public void test() {
+				//we need to set a value because it is null by default
+				environmentVariables.set("dummy name", "dummy value");
+				environmentVariables.set("another name", "dummy value");
+				environmentVariables.clear("dummy name", "another name");
+				assertThat(getenv("dummy name")).isNull();
+				assertThat(getenv("another name")).isNull();
+			}
 		}
 	}
 
 	@ExpectNoFailure
 	public static class environment_variables_that_are_cleared_in_the_test_are_not_stored_in_the_environment_variables_map {
-		@Rule
-		public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		public static class TestClass {
+			@Rule
+			public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
-		@Test
-		public void test() {
-			//we need to set a value because it is null by default
-			environmentVariables.set("dummy name", "dummy value");
-			environmentVariables.set("another name", "dummy value");
-			environmentVariables.clear("dummy name", "another name");
-			assertThat(getenv())
-				.doesNotContainKey("dummy name")
-				.doesNotContainKey("another name");
+			@Test
+			public void test() {
+				//we need to set a value because it is null by default
+				environmentVariables.set("dummy name", "dummy value");
+				environmentVariables.set("another name", "dummy value");
+				environmentVariables.clear("dummy name", "another name");
+				assertThat(getenv())
+					.doesNotContainKey("dummy name")
+					.doesNotContainKey("another name");
+			}
 		}
 	}
 }
