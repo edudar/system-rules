@@ -10,13 +10,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import org.junit.*;
-import org.junit.contrib.java.lang.system.TestChecker.ExpectNoFailure;
+import org.junit.contrib.java.lang.system.TestClassRunner.ExpectNoFailure;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 
-@RunWith(TestChecker.class)
+@RunWith(Enclosed.class)
 public class SystemErrRuleTest {
 
+	@RunWith(TestClassRunner.class)
 	public static class after_the_test_system_err_is_same_as_before {
 		private static PrintStream originalStream;
 
@@ -40,6 +42,7 @@ public class SystemErrRuleTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class text_is_still_written_to_system_err_if_no_log_mode_is_specified {
 		private static PrintStream originalStream;
 		private static ByteArrayOutputStream captureErrorStream;
@@ -71,6 +74,7 @@ public class SystemErrRuleTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class no_text_is_written_to_system_err_if_muted_globally {
 		private static PrintStream originalStream;
 		private static ByteArrayOutputStream captureErrorStream;
@@ -102,6 +106,7 @@ public class SystemErrRuleTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class no_text_is_written_to_system_err_after_muted_locally {
 		private static PrintStream originalStream;
 		private static ByteArrayOutputStream captureErrorStream;
@@ -136,6 +141,7 @@ public class SystemErrRuleTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class no_text_is_written_to_system_err_for_successful_test_if_muted_globally_for_successful_tests {
 		private static PrintStream originalStream;
 		private static ByteArrayOutputStream captureErrorStream;
@@ -168,6 +174,7 @@ public class SystemErrRuleTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class text_is_written_to_system_err_for_failing_test_if_muted_globally_for_successful_tests {
 		private static PrintStream originalStream;
 		private static ByteArrayOutputStream captureErrorStream;
@@ -204,6 +211,7 @@ public class SystemErrRuleTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class no_text_is_written_to_system_err_for_successful_test_if_muted_locally_for_successful_tests {
 		private static PrintStream originalStream;
 		private static ByteArrayOutputStream captureErrorStream;
@@ -236,6 +244,7 @@ public class SystemErrRuleTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class text_is_written_to_system_err_for_failing_test_if_muted_locally_for_successful_tests {
 		private static PrintStream originalStream;
 		private static ByteArrayOutputStream captureErrorStream;
@@ -272,85 +281,71 @@ public class SystemErrRuleTest {
 		}
 	}
 
-	@ExpectNoFailure
 	public static class no_text_is_logged_by_default {
-		public static class TestClass {
-			@Rule
-			public final SystemErrRule systemErrRule = new SystemErrRule();
+		@Rule
+		public final SystemErrRule systemErrRule = new SystemErrRule();
 
-			@Test
-			public void test() {
-				System.err.print("dummy text");
-				assertThat(systemErrRule.getLog()).isEmpty();
-			}
+		@Test
+		public void test() {
+			System.err.print("dummy text");
+			assertThat(systemErrRule.getLog()).isEmpty();
 		}
 	}
 
-	@ExpectNoFailure
 	public static class text_is_logged_if_log_has_been_enabled_globally {
-		public static class TestClass {
-			@Rule
-			public final SystemErrRule systemErrRule = new SystemErrRule()
-				.enableLog();
+		@Rule
+		public final SystemErrRule systemErrRule = new SystemErrRule()
+			.enableLog();
 
-			@Test
-			public void test() {
-				System.err.print("dummy text");
-				assertThat(systemErrRule.getLog()).isEqualTo("dummy text");
-			}
+		@Test
+		public void test() {
+			System.err.print("dummy text");
+			assertThat(systemErrRule.getLog()).isEqualTo("dummy text");
 		}
 	}
 
-	@ExpectNoFailure
 	public static class text_is_logged_after_log_has_been_enabled_locally {
-		public static class TestClass {
-			@Rule
-			public final SystemErrRule systemErrRule = new SystemErrRule();
+		@Rule
+		public final SystemErrRule systemErrRule = new SystemErrRule();
 
-			@Test
-			public void test() {
-				System.err.print("text before enabling log");
-				systemErrRule.enableLog();
-				System.err.print("text after enabling log");
-				assertThat(systemErrRule.getLog())
-					.isEqualTo("text after enabling log");
-			}
+		@Test
+		public void test() {
+			System.err.print("text before enabling log");
+			systemErrRule.enableLog();
+			System.err.print("text after enabling log");
+			assertThat(systemErrRule.getLog())
+				.isEqualTo("text after enabling log");
 		}
 	}
 
-	@ExpectNoFailure
 	public static class log_contains_only_text_that_has_been_written_after_log_was_cleared {
-		public static class TestClass {
-			@Rule
-			public final SystemErrRule systemErrRule = new SystemErrRule()
-				.enableLog();
+		@Rule
+		public final SystemErrRule systemErrRule = new SystemErrRule()
+			.enableLog();
 
-			@Test
-			public void test() {
-				System.err.print("text before clearing");
-				systemErrRule.clearLog();
-				System.err.print("text after clearing");
-				assertThat(systemErrRule.getLog()).isEqualTo("text after clearing");
-			}
+		@Test
+		public void test() {
+			System.err.print("text before clearing");
+			systemErrRule.clearLog();
+			System.err.print("text after clearing");
+			assertThat(systemErrRule.getLog()).isEqualTo("text after clearing");
 		}
 	}
 
-	@ExpectNoFailure
 	public static class text_is_logged_if_rule_is_enabled_and_muted {
-		public static class TestClass {
-			@Rule
-			public final SystemErrRule systemErrRule = new SystemErrRule()
-				.enableLog()
-				.mute();
+		@Rule
+		public final SystemErrRule systemErrRule = new SystemErrRule()
+			.enableLog()
+			.mute();
 
-			@Test
-			public void test() {
-				System.err.print("dummy text");
-				assertThat(systemErrRule.getLog()).isEqualTo("dummy text");
-			}
+		@Test
+		public void test() {
+			System.err.print("dummy text");
+			assertThat(systemErrRule.getLog()).isEqualTo("dummy text");
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	@ExpectNoFailure
 	public static class log_is_provided_with_new_line_characters_only_if_requested {
 		@ClassRule

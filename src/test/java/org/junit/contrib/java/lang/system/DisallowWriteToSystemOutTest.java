@@ -3,7 +3,7 @@ package org.junit.contrib.java.lang.system;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.TestChecker.ExpectNoFailure;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 
@@ -14,22 +14,20 @@ import static java.lang.System.*;
 import static java.util.Locale.CANADA;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(TestChecker.class)
+@RunWith(Enclosed.class)
 public class DisallowWriteToSystemOutTest {
 	private static final Locale DUMMY_LOCALE = CANADA;
 
-	@ExpectNoFailure
 	public static class test_is_successful_if_it_does_not_write_to_System_out {
-		public static class TestClass {
-			@Rule
-			public final DisallowWriteToSystemOut disallowWrite = new DisallowWriteToSystemOut();
+		@Rule
+		public final DisallowWriteToSystemOut disallowWrite = new DisallowWriteToSystemOut();
 
-			@Test
-			public void test() {
-			}
+		@Test
+		public void test() {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_tries_to_append_a_text_to_System_out {
 		public static class TestClass {
 			@Rule
@@ -47,6 +45,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_tries_to_append_a_character_to_System_out {
 		public static class TestClass {
 			@Rule
@@ -64,6 +63,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_tries_to_append_a_sub_sequence_of_a_text_to_System_out {
 		public static class TestClass {
 			@Rule
@@ -81,6 +81,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_format_with_a_Locale {
 		public static class TestClass {
 			@Rule
@@ -99,6 +100,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_format_without_a_Locale {
 		public static class TestClass {
 			@Rule
@@ -116,6 +118,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_print_with_a_boolean {
 		public static class TestClass {
 			@Rule
@@ -133,6 +136,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_print_with_a_char {
 		public static class TestClass {
 			@Rule
@@ -150,6 +154,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_print_with_an_array_of_chars {
 		public static class TestClass {
 			@Rule
@@ -167,6 +172,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_print_with_a_double {
 		public static class TestClass {
 			@Rule
@@ -184,6 +190,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_print_with_a_float {
 		public static class TestClass {
 			@Rule
@@ -201,6 +208,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_print_with_an_int {
 		public static class TestClass {
 			@Rule
@@ -218,6 +226,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_print_with_a_long {
 		public static class TestClass {
 			@Rule
@@ -235,6 +244,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_print_with_an_object {
 		public static class TestClass {
 			@Rule
@@ -252,6 +262,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_print_with_a_string {
 		public static class TestClass {
 			@Rule
@@ -269,6 +280,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_printf_with_a_localized_formatted_text {
 		public static class TestClass {
 			@Rule
@@ -287,6 +299,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_printf_with_a_formatted_text {
 		public static class TestClass {
 			@Rule
@@ -304,6 +317,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_println_on_System_out {
 		public static class TestClass {
 			@Rule
@@ -323,6 +337,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_println_with_a_boolean {
 		public static class TestClass {
 			@Rule
@@ -340,6 +355,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_println_with_a_char {
 		public static class TestClass {
 			@Rule
@@ -357,6 +373,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_println_with_an_array_of_chars {
 		public static class TestClass {
 			@Rule
@@ -374,6 +391,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_println_with_a_double {
 		public static class TestClass {
 			@Rule
@@ -391,6 +409,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_println_with_a_float {
 		public static class TestClass {
 			@Rule
@@ -408,6 +427,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_println_with_an_int {
 		public static class TestClass {
 			@Rule
@@ -425,6 +445,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_println_with_a_long {
 		public static class TestClass {
 			@Rule
@@ -442,6 +463,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_println_with_an_object {
 		public static class TestClass {
 			@Rule
@@ -459,6 +481,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_it_calls_System_out_println_with_a_string {
 		public static class TestClass {
 			@Rule
@@ -476,6 +499,7 @@ public class DisallowWriteToSystemOutTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class after_the_test_System_out_is_same_as_before {
 		private static PrintStream originalOut;
 

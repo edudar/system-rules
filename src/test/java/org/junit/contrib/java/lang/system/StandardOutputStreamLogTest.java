@@ -10,27 +10,25 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.TestChecker.ExpectNoFailure;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 
-@RunWith(TestChecker.class)
+@RunWith(Enclosed.class)
 public class StandardOutputStreamLogTest {
 
-	@ExpectNoFailure
 	public static class log_contains_text_that_has_been_written_to_system_out {
-		public static class TestClass {
-			@Rule
-			public final StandardOutputStreamLog log = new StandardOutputStreamLog();
+		@Rule
+		public final StandardOutputStreamLog log = new StandardOutputStreamLog();
 
-			@Test
-			public void test() {
-				System.out.print("dummy text");
-				assertThat(log.getLog()).isEqualTo("dummy text");
-			}
+		@Test
+		public void test() {
+			System.out.print("dummy text");
+			assertThat(log.getLog()).isEqualTo("dummy text");
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class after_the_test_system_out_is_same_as_before {
 		private static PrintStream originalStream;
 
@@ -54,6 +52,7 @@ public class StandardOutputStreamLogTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class text_is_still_written_to_system_out_if_no_log_mode_is_specified {
 		private static PrintStream originalStream;
 		private static ByteArrayOutputStream captureOutputStream;
@@ -85,6 +84,7 @@ public class StandardOutputStreamLogTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class no_text_is_written_to_system_out_if_log_mode_is_log_only {
 		private static PrintStream originalStream;
 		private static ByteArrayOutputStream captureOutputStream;
@@ -117,22 +117,20 @@ public class StandardOutputStreamLogTest {
 		}
 	}
 
-	@ExpectNoFailure
 	public static class log_contains_only_text_that_has_been_written_after_log_was_cleared {
-		public static class TestClass {
-			@Rule
-			public final StandardOutputStreamLog log = new StandardOutputStreamLog();
+		@Rule
+		public final StandardOutputStreamLog log = new StandardOutputStreamLog();
 
-			@Test
-			public void test() {
-				System.out.print("text before clearing");
-				log.clear();
-				System.out.print("text after clearing");
-				assertThat(log.getLog()).isEqualTo("text after clearing");
-			}
+		@Test
+		public void test() {
+			System.out.print("text before clearing");
+			log.clear();
+			System.out.print("text after clearing");
+			assertThat(log.getLog()).isEqualTo("text after clearing");
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class rule_cannot_be_created_without_log_mode {
 		public static class TestClass {
 			@Rule

@@ -4,11 +4,13 @@ import static java.lang.System.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.*;
-import org.junit.contrib.java.lang.system.TestChecker.ExpectNoFailure;
+import org.junit.contrib.java.lang.system.TestClassRunner.ExpectNoFailure;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
-@RunWith(TestChecker.class)
+@RunWith(Enclosed.class)
 public class ClearSystemPropertiesTest {
+	@RunWith(TestClassRunner.class)
 	@ExpectNoFailure
 	public static class properties_are_cleared_at_start_of_test {
 		@ClassRule
@@ -34,6 +36,7 @@ public class ClearSystemPropertiesTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	@ExpectNoFailure
 	public static class property_is_cleared_after_added_to_rule_within_test {
 		@ClassRule
@@ -58,6 +61,7 @@ public class ClearSystemPropertiesTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class after_test_properties_have_the_same_values_as_before {
 		@ClassRule
 		public static final RestoreSystemProperties RESTORE
@@ -89,6 +93,7 @@ public class ClearSystemPropertiesTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	@ExpectNoFailure
 	public static class property_that_is_not_present_does_not_cause_failure {
 		@ClassRule

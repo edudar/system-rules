@@ -3,17 +3,19 @@ package org.junit.contrib.java.lang.system;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.*;
-import org.junit.contrib.java.lang.system.TestChecker.ExpectNoFailure;
+import org.junit.contrib.java.lang.system.TestClassRunner.ExpectNoFailure;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import java.util.Properties;
 
-@RunWith(TestChecker.class)
+@RunWith(Enclosed.class)
 public class RestoreSystemPropertiesTest {
 	//ensure that every test uses the same property, because this one is restored after the test
 	private static final String PROPERTY_KEY = "dummy property";
 
+	@RunWith(TestClassRunner.class)
 	public static class after_test_properties_have_the_same_values_as_before {
 		@BeforeClass
 		public static void setProperty() {
@@ -36,6 +38,7 @@ public class RestoreSystemPropertiesTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class property_that_does_not_exist_before_the_test_does_not_exist_after_the_test {
 		@BeforeClass
 		public static void clearProperty() {
@@ -58,6 +61,7 @@ public class RestoreSystemPropertiesTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	@ExpectNoFailure
 	public static class at_start_of_a_test_properties_are_equal_to_the_original_properties {
 		private static Properties originalProperties;

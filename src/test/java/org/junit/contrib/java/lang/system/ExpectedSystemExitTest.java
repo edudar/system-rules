@@ -12,12 +12,13 @@ import java.security.Permission;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.TestChecker.ExpectNoFailure;
+import org.junit.contrib.java.lang.system.TestClassRunner.ExpectNoFailure;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 
 
-@RunWith(TestChecker.class)
+@RunWith(Enclosed.class)
 public class ExpectedSystemExitTest {
 	private static final Object ARBITRARY_CONTEXT = new Object();
 	private static final int ARBITRARY_EXIT_STATUS = 216843;
@@ -31,46 +32,38 @@ public class ExpectedSystemExitTest {
 		}
 	};
 
-	@ExpectNoFailure
 	public static class test_is_not_affected_by_rule_without_expectation {
-		public static class TestClass {
-			@Rule
-			public final ExpectedSystemExit exit = ExpectedSystemExit.none();
+		@Rule
+		public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 
-			@Test
-			public void test() {
-			}
+		@Test
+		public void test() {
 		}
 	}
 
-	@ExpectNoFailure
 	public static class test_is_successful_if_expected_exit_is_called {
-		public static class TestClass {
-			@Rule
-			public final ExpectedSystemExit exit = ExpectedSystemExit.none();
+		@Rule
+		public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 
-			@Test
-			public void test() {
-				exit.expectSystemExit();
-				System.exit(0);
-			}
+		@Test
+		public void test() {
+			exit.expectSystemExit();
+			System.exit(0);
 		}
 	}
 
-	@ExpectNoFailure
 	public static class test_is_successful_exit_is_called_with_expected_status_code {
-		public static class TestClass {
-			@Rule
-			public final ExpectedSystemExit exit = ExpectedSystemExit.none();
+		@Rule
+		public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 
-			@Test
-			public void test() {
-				exit.expectSystemExitWithStatus(0);
-				System.exit(0);
-			}
+		@Test
+		public void test() {
+			exit.expectSystemExitWithStatus(0);
+			System.exit(0);
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_exit_is_called_but_not_expected {
 		public static class TestClass {
 			@Rule
@@ -88,6 +81,7 @@ public class ExpectedSystemExitTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_exit_is_expected_but_not_called {
 		public static class TestClass {
 			@Rule
@@ -105,6 +99,7 @@ public class ExpectedSystemExitTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_exit_is_called_with_wrong_status_code {
 		public static class TestClass {
 			@Rule
@@ -123,25 +118,23 @@ public class ExpectedSystemExitTest {
 		}
 	}
 
-	@ExpectNoFailure
 	public static class test_is_successful_if_assertion_is_met_after_exit_has_been_called {
-		public static class TestClass {
-			@Rule
-			public final ExpectedSystemExit exit = ExpectedSystemExit.none();
+		@Rule
+		public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 
-			@Test
-			public void test() {
-				exit.expectSystemExit();
-				exit.checkAssertionAfterwards(new Assertion() {
-					public void checkAssertion() throws Exception {
-						assertTrue(true);
-					}
-				});
-				System.exit(0);
-			}
+		@Test
+		public void test() {
+			exit.expectSystemExit();
+			exit.checkAssertionAfterwards(new Assertion() {
+				public void checkAssertion() throws Exception {
+					assertTrue(true);
+				}
+			});
+			System.exit(0);
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_assertion_is_not_met_after_exit_has_been_called {
 		public static class TestClass {
 			@Rule
@@ -161,6 +154,7 @@ public class ExpectedSystemExitTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_first_of_two_assertions_is_not_met {
 		public static class TestClass {
 			@Rule
@@ -179,6 +173,7 @@ public class ExpectedSystemExitTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class test_fails_if_second_of_two_assertions_is_not_met {
 		public static class TestClass {
 			@Rule
@@ -197,6 +192,7 @@ public class ExpectedSystemExitTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class after_test_security_manager_is_the_same_as_before {
 		private static final SecurityManager MANAGER = new ArbitrarySecurityManager();
 
@@ -219,6 +215,7 @@ public class ExpectedSystemExitTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	@ExpectNoFailure
 	public static class current_security_manager_is_used_for_anything_else_than_system_exit {
 		private static final SecurityManager MANAGER = new ArbitrarySecurityManager();
@@ -239,24 +236,21 @@ public class ExpectedSystemExitTest {
 		}
 	}
 
-	@ExpectNoFailure
 	public static class test_is_successful_if_expected_exit_is_called_in_a_thread {
-		public static class TestClass {
-			@Rule
-			public final ExpectedSystemExit exit = ExpectedSystemExit.none();
+		@Rule
+		public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 
-			@Test
-			public void test() throws Throwable {
-				exit.expectSystemExitWithStatus(ARBITRARY_EXIT_STATUS);
-				Runnable callSystemExit = new Runnable() {
-					public void run() {
-						System.exit(ARBITRARY_EXIT_STATUS);
-					}
-				};
-				Thread thread = new Thread(callSystemExit);
-				thread.start();
-				sleep(1000); // wait until the thread exits
-			}
+		@Test
+		public void test() throws Throwable {
+			exit.expectSystemExitWithStatus(ARBITRARY_EXIT_STATUS);
+			Runnable callSystemExit = new Runnable() {
+				public void run() {
+					System.exit(ARBITRARY_EXIT_STATUS);
+				}
+			};
+			Thread thread = new Thread(callSystemExit);
+			thread.start();
+			sleep(1000); // wait until the thread exits
 		}
 	}
 

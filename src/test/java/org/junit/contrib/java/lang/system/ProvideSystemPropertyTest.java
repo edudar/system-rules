@@ -14,11 +14,12 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.TestChecker.ExpectNoFailure;
+import org.junit.contrib.java.lang.system.TestClassRunner.ExpectNoFailure;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 
-@RunWith(TestChecker.class)
+@RunWith(Enclosed.class)
 public class ProvideSystemPropertyTest {
 	private static final String EXAMPLE_PROPERTIES = "example.properties";
 	private static final String ARBITRARY_KEY = "arbitrary property";
@@ -26,6 +27,7 @@ public class ProvideSystemPropertyTest {
 	private static final String ARBITRARY_VALUE = "arbitrary value";
 	private static final String A_DIFFERENT_VALUE = "different value";
 
+	@RunWith(TestClassRunner.class)
 	@ExpectNoFailure
 	public static class provided_property_values_are_present_during_test {
 		@ClassRule
@@ -46,6 +48,7 @@ public class ProvideSystemPropertyTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	@ExpectNoFailure
 	public static class property_is_null_during_test_if_set_to_null {
 		@ClassRule
@@ -69,6 +72,7 @@ public class ProvideSystemPropertyTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class after_test_properties_have_the_same_values_as_before {
 		@ClassRule
 		public static final RestoreSystemProperties restoreSystemProperty
@@ -99,6 +103,7 @@ public class ProvideSystemPropertyTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class property_that_does_not_exist_before_the_test_does_not_exist_after_the_test {
 		@ClassRule
 		public static final RestoreSystemProperties restoreSystemProperty
@@ -124,6 +129,7 @@ public class ProvideSystemPropertyTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	@ExpectNoFailure
 	public static class properties_from_resource_are_present_during_test {
 		@ClassRule
@@ -141,6 +147,7 @@ public class ProvideSystemPropertyTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	@ExpectNoFailure
 	public static class properties_from_file_are_present_during_test {
 		@ClassRule
@@ -175,6 +182,7 @@ public class ProvideSystemPropertyTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	@ExpectNoFailure
 	public static class property_has_value_that_is_set_within_the_test_using_the_rule {
 		@ClassRule
@@ -198,6 +206,7 @@ public class ProvideSystemPropertyTest {
 		}
 	}
 
+	@RunWith(TestClassRunner.class)
 	public static class after_test_property_has_the_same_values_as_before_if_set_within_test_using_the_rule {
 		@ClassRule
 		public static final RestoreSystemProperties restoreSystemProperty
